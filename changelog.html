@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新日志</title>
+    <!-- <link href="styles.css" rel="stylesheet"> -->
+    <link href="/light-theme.css" rel="stylesheet">  
+        <!-- <script src="db.js" type="module" defer></script> -->
+    <!-- <script src="script.js" type="module" defer></script>   -->
+    <style>
+        /* 导航栏样式 */
+        .nav-header {
+            background-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 1rem;
+            z-index: 50;
+            border-radius: 1.5rem;
+            margin: 1rem auto 0;
+            max-width: 90%;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-header:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-logo:hover {
+            transform: scale(1.02);
+        }
+        
+        .nav-logo img {
+            width: 36px;
+            height: 36px;
+            margin-right: 0.75rem;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-logo span {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1f2937;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+        }
+        
+        .nav-links a:hover {
+            color: #1e40af;
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        
+        .nav-links a.active {
+            color: #1e40af;
+            background-color: rgba(59, 130, 246, 0.1);
+            font-weight: 600;
+        }
+
+                /* 响应式设计 */
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .nav-header {
+                top: 0.5rem;
+                max-width: 95%;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 0.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links a {
+                padding: 0.5rem 0.75rem;
+            }
+            
+            .modal-title {
+                font-size: 1.25rem;
+            }
+            
+            .modal-cover {
+                height: 200px;
+            }
+        }
+        /* 页面特定样式 */
+.bg-gray-100{
+        /* backdrop-filter: blur(15px); */
+        background-image: url(https://moegirl.uk/images/2/2b/BA_Ui_ML.png);
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+}
+
+    .text-gxrz {
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / 84%);
+    font-size: 5vh;
+    }
+
+    .text-gxjl {
+    --tw-text-opacity: 1;
+    color: rgba(75, 85, 99, var(--tw-text-opacity));
+    font-size: 2.8vh;
+}
+        .nav-header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem 0;
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .nav-logo img {
+            width: 32px;
+            height: 32px;
+            margin-right: 0.5rem;
+        }
+        .nav-logo span {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        .changelog-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .update-section {
+            border: 4px solid #d7d7d773;
+            border-radius: 16px;
+            --tw-bg-opacity: 1;
+            backdrop-filter: blur(45px);
+            border-radius: 25px;
+            background-color: rgb(255 255 255 / 35%);
+            /* background: white; */
+            /* border-radius: 0.5rem; */
+            padding: 2.0rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .update-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .update-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .update-item:last-child {
+            border-bottom: none;
+        }
+        .footer-link {
+            text-align: center;
+            margin-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .github-link {
+            color: #4b5563;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .github-link:hover {
+            color: #1f2937;
+        }
+        .page-title {
+            /* backdrop-filter: blur(15px); */
+            text-align: center;
+            margin: 6rem 0;
+        }
+
+        /*更新记录样式*/
+/* 
+
+.link {
+    color: var(--theme-color);
+    transition: .25s;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/**/
+/* .update-tag.new {
+    background-color: #a4ba80;
+    font-size: 1.8vh;
+}
+.dark .update-tag {
+    color: #000;
+}
+.update-tag {
+    border-radius: 2px;
+    color: #fff;
+    margin-left: 12px;
+    margin-right: 5px;
+    padding: 0 3px;
+} */
+
+/**/
+/* .update-tag.imp {
+    background-color: rgb(161, 198, 201);
+    font-size: 1.8vh;
+}
+
+.update-tag.fix {
+    background-color: #dbc693;
+    font-size: 1.8vh;
+}  */
+
+
+/* 更新日志样式 */
+.update-section {
+    /* border: 4px solid #d7d7d773; */
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 18px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.update-tag {
+    min-width: 70px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.update-tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgb(255 255 255);
+}
+
+.update-item {
+    flex: 1;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+}
+
+.update-item:hover {
+    background-color: rgba(255, 255, 255, 0.452);
+}
+
+/* 标签颜色 */
+.update-tag.new {
+    background-color: #a4ba80;
+    border: 2.1px solid rgb(158 255 0);
+}
+
+.update-tag.update {
+    background-color: #8fb4d4;
+    border: 2.1px solid #64a1d5;
+}
+
+.update-tag.imp {
+    background-color: #a1c6c9;
+    border: 2.1px solid #7ac0c5;
+}
+
+.update-tag.fix {
+    background-color: #dbc693;
+    border: 2.1px solid rgb(213 182 108);
+}
+
+/* 边框颜色 */
+.border-new {
+    border-color: #a4ba80;
+}
+
+.border-update {
+    border-color: #8fb4d4;
+}
+
+.border-imp {
+    border-color: #a1c6c9;
+}
+
+.border-fix {
+    border-color: #dbc693;
+}
+
+/* 动画效果 */
+.update-section {
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+}
+
+.update-section:nth-child(1) { animation-delay: 0.1s; }
+.update-section:nth-child(2) { animation-delay: 0.2s; }
+.update-section:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 640px) {
+    .update-section {
+        padding: 1.5rem;
+    }
+    
+    .update-tag {
+        min-width: 60px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.65rem;
+    }
+    
+    .update-item {
+        padding-left: 1rem;
+    }
+}
+    
+    </style>
+</head>
+<body class="bg-gray-100">
+
+        <!-- 导航栏 -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <img src="../images/logo.png" alt="Logo">
+                <span>关忧水印</span>
+            </a>
+            <div class="nav-links">
+                <a href="/">首页</a>
+                <a href="./blog/index.html">博客</a>
+                <a href="./changelog.html" class="active">更新日志</a>
+                <a href="./about/index.html">关于我们</a>
+                <a href="../article/privacy.html">隐私政策</a>
+                <a href="../article/Termsofuse.html">使用条款</a>
+            </div>
+        </div>
+    </nav>
+    <!-- <nav class="bg-white shadow-md fixed top-0 left-0 right-0 z-50">
+      <div class="container mx-auto px-4 py-3">
+          <div class="flex justify-between items-center">
+              左侧区域：品牌标识
+              <div class="flex items-center">
+                  <a href="/" class="flex items-center cursor-pointer">
+                      <img 
+                          src="../images/logo.jpg" 
+                          alt="Logo" 
+                          class="h-8 w-8 mr-2" 
+                          width="32" 
+                          height="32"
+                          fetchpriority="high"
+                      />
+                      完整品牌名
+                      <span class="text-xl font-bold text-gray-800 brand-name-full" data-i18n="logo">
+                          关 忧 水印
+                      </span>
+                      简短品牌名
+                      <span class="text-xl font-bold text-gray-800 brand-name-short" data-i18n="logoShort">
+                          关 忧
+                      </span>
+                  </a>
+              </div>
+  
+              右侧区域：功能按钮
+              <div class="flex items-center space-x-4">
+                  GitHub 链接
+                  <a
+                      href="404.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-gray-700 hover:text-blue-500"
+                      title="GitHub"
+                  >
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+                      </svg>
+                  </a>
+
+              </div>
+          </div>
+      </div>
+  </nav> -->
+
+    <!-- 页面标题 -->
+    <div class="page-title">
+        <h1 class="text-2xl font-bold text-gxrz mb-2">更新日志</h1>
+        <p class="text-gxjl">产品更新记录</p>
+    </div>
+
+<!-- 更新日志内容 -->
+<div class="changelog-container">
+
+    <!-- 2025年6月 -->
+    <div class="update-section">
+        <h2 class="text-xl font-bold mb-4">2025年5月</h2>
+        <ul class="update-list space-y-4">
+            <li class="flex items-start">
+                <span class="update-tag new shrink-0 px-3 py-1.5 rounded-md text-xs font-medium mr-4 mt-0.5 flex items-center justify-center">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-white mr-1.5"></span>新内容
+                </span>
+                <div class="update-item border-l-4 border-new pl-4 py-1.5 bg-white/10 rounded-r-lg">
+                    添加多个语言支持
+                </div>
+            </li>
+            <li class="flex items-start">
+                <span class="update-tag update shrink-0 px-3 py-1.5 rounded-md text-xs font-medium mr-4 mt-0.5 flex items-center justify-center">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-white mr-1.5"></span>新更新 
+                </span>
+                <div class="update-item border-l-4 border-update pl-4 py-1.5 bg-white/10 rounded-r-lg">
+                    修复已知问题
+                </div>
+            </li>
+            <li class="flex items-start">
+                <span class="update-tag imp shrink-0 px-3 py-1.5 rounded-md text-xs font-medium mr-4 mt-0.5 flex items-center justify-center">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-white mr-1.5"></span>新改进 
+                </span>
+                <div class="update-item border-l-4 border-imp pl-4 py-1.5 bg-white/10 rounded-r-lg">
+                    优化用户界面
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 2025年4月 -->
+    <div class="update-section">
+        <h2 class="text-xl font-bold mb-4">2025年4月</h2>
+        <ul class="update-list space-y-4">
+            <li class="flex items-start">
+                <span class="update-tag new shrink-0 px-3 py-1.5 rounded-md text-xs font-medium mr-4 mt-0.5 flex items-center justify-center">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-white mr-1.5"></span>新内容
+                </span>
+                <div class="update-item border-l-4 border-new pl-4 py-1.5 bg-white/10 rounded-r-lg">
+                    上线
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 测试 -->
+    <div class="update-section">
+        <h2 class="text-xl font-bold mb-4">2025年6月</h2>
+        <ul class="update-list space-y-4">
+            <li class="flex items-start">
+                <span class="update-tag new shrink-0 px-3 py-1.5 rounded-md text-xs font-medium mr-4 mt-0.5 flex items-center justify-center">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-white mr-1.5"></span>新内容
+                </span>
+                <div class="update-item border-l-4 border-new pl-4 py-1.5 bg-white/10 rounded-r-lg">
+                    这里是新内容显示区域
+                </div>
+            </li>
+            <li class="flex items-start">
+                <span class="update-tag fix shrink-0 px-3 py-1.5 rounded-md text-xs font-medium mr-4 mt-0.5 flex items-center justify-center">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-white mr-1.5"></span>新修复 
+                </span>
+                <div class="update-item border-l-4 border-fix pl-4 py-1.5 bg-white/10 rounded-r-lg">
+                    这里是修复内容显示区域
+                </div>
+            </li>
+            <li class="flex items-start">
+                <span class="update-tag imp shrink-0 px-3 py-1.5 rounded-md text-xs font-medium mr-4 mt-0.5 flex items-center justify-center">
+                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-white mr-1.5"></span>新改进 
+                </span>
+                <div class="update-item border-l-4 border-imp pl-4 py-1.5 bg-white/10 rounded-r-lg">
+                    这里是改进内容显示区域
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</div>
+    
+
+    <!-- Footer -->
+    <footer class="bg-white mt-12 py-8 border-t border-gray-200">
+      <div class="container mx-auto px-4">
+        <!-- 主要内容区 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <!-- 品牌信息 -->
+          <div class="text-center md:text-left">
+            <div class="flex items-center justify-center md:justify-start mb-3">
+              <img src="../images/logo.png" alt="Logo" class="h-8 w-8 mr-2" />
+              <span class="text-xl font-bold text-gray-800" data-i18n="logo">关 忧 水印</span>
+            </div>
+            <p class="text-sm text-gray-600">
+              <span data-i18n="copyright">@2025 KozekiUi.wntab.work</span>
+              <span data-i18n="rights">保留所有权利</span>
+            </p>
+          </div>
+          
+          <!-- 快速链接  -->
+          <div class="text-center md:text-left">
+            <h4 class="text-sm font-semibold text-gray-700 mb-3">快速链接</h4>
+            <ul class="space-y-2">
+              <li>
+                <a href="/blog/index.html" class="text-sm text-gray-600 hover:text-blue-600">博客</a>
+              </li>
+              <li>
+                <a href="/changelog.html" class="text-sm text-gray-600 hover:text-blue-600">更新日志</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 法律条款  -->
+          <div class="text-center md:text-left">
+            <h4 class="text-sm font-semibold text-gray-700 mb-3">法律条款</h4>
+            <ul class="space-y-2">
+              <li>
+                <a href="article/privacy.html" class="text-sm text-gray-600 hover:text-blue-600" data-i18n="privacyPolicy">隐私政策</a>
+              </li>
+              <li>
+                <a href="article/Termsofuse.html" class="text-sm text-gray-600 hover:text-blue-600" data-i18n="termsConditions">使用条款</a>
+              </li>
+            </ul>
+          </div>
+ <!-- 友情链接 -->
+        <div class="text-center">
+          <h4 class="text-sm font-semibold text-gray-700 mb-3" data-i18n="friendlyLinks">友情链接</h4>
+          <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://hello.sak-fsu.wntab.work" class="text-sm text-gray-600 hover:text-blue-600" target="_blank" rel="noopener noreferrer" data-i18n="RefHide">SAKFSU</a>
+          </div>
+        </div>
+
+        <!-- 分隔线 -->
+        <!-- <div class="border-t border-gray-200 my-6"></div> -->
+
+       
+
+      </div>
+    </footer>
+    </div>
+</body>
+</html> 

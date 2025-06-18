@@ -1,0 +1,817 @@
+@import url('https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/tailwindcss/2.2.19/tailwind.min.css');
+
+body {
+    background-color: #f3f4f6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.preview-item {
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.preview-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.preview-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.preview-item a {
+width: 100%;
+    border-radius: 15px;
+    background-color: hsl(var(--primary));
+    background-image: url(https://tse4-mm.cn.bing.net/th/id/OIP-C.apkBajCIYADPRCIQWyJw-wHaEK?rs=1&pid=ImgDetMain);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    box-shadow: 1px 0px 50px 2px #7c916f;
+}
+
+.preview-item a:hover {
+    background-color: #2563eb;
+}
+
+#colorPreview {
+    transition: transform 0.2s;
+}
+
+#colorPreview:hover {
+    transform: scale(1.1);
+}
+
+/* #processButton {
+    width: 100%;
+} */
+
+#processButton {
+  width: 100%;
+  border-radius: 15px;
+  background-color: hsl(var(--primary));
+  background-image: url(https://tse4-mm.cn.bing.net/th/id/OIP-C.apkBajCIYADPRCIQWyJw-wHaEK?rs=1&pid=ImgDetMain);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  box-shadow: 1px 0px 50px 2px #7c916f;
+}
+
+#previewContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* 在文件末尾添加以下样式 */
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+    cursor: pointer;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hidden {
+    display: none;
+}
+
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .page-loader {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: auto;
+    height: auto;
+    background: none;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+  }
+  .processing-loader {
+    display: none;
+    margin-top: 1rem;
+    text-align: center;
+  }
+  .processing-loader .loader {
+    margin: 0 auto;
+    width: 36px;
+    height: 36px;
+    border-width: 3px;
+  }
+  .processing-loader p {
+    margin-top: 0.5rem;
+    color: #4a5568;
+    font-size: 0.875rem;
+  }
+
+/* 添加以下样式到文件末尾 */
+#pasteArea span {
+    color: #3b82f6 !important; /* 使用 !important 来确保这个样式会被应用 */
+    font-weight: normal; /* 可选：使文字加粗 */
+}
+
+#pasteArea:hover span {
+    color: #2563eb !important; /* 鼠标悬停时的颜色变化 */
+}
+
+/* 添加响应式布局样式 */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  #processButton, #resetButton {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+
+  #watermarkDensity, #watermarkColor, #watermarkSize {
+    font-size: 0.875rem;
+  }
+
+  .preview-item img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* 优化按钮布局 */
+.button-container {
+  display: flex;
+  width: 100%;
+}
+
+.process-button {
+  flex: 1.618;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0; /* 这行很重要，允许按钮在必要时缩小 */
+}
+
+.reset-button {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0; /* 这行很重要，允许按钮在必要时缩小 */
+}
+
+/* 针对移动设备的样式 */
+@media (max-width: 640px) {
+  .process-button, .reset-button {
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* 优化预览区域布局 */
+#imagePreviewArea {
+  display: none; /* 默认隐藏 */
+}
+
+#imagePreviewArea:not(:empty) {
+  display: flex; /* 当有内容时才显示 */
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+#imagePreviewArea img {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  border-radius: 0.25rem;
+}
+
+/* 添加到文件末尾 */
+select:disabled {
+    appearance: none;
+    background-color: #f3f3f3;
+    color: #999;
+    cursor: not-allowed;
+}
+
+/* 修改按钮组样式 */
+.button-group {
+  display: flex;
+  margin-top: 0.5rem;
+}
+
+.download-button, .copy-button {
+  flex: 1;
+  padding: 0.5rem;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.download-button {
+  background-color: #3b82f6;
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.copy-button {
+  background-color: #1f2937; /* 黑色背景 */
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.download-button:hover {
+  background-color: #2563eb;
+}
+
+.copy-button:hover {
+  background-color: #111827; /* 深一点的黑色 */
+}
+
+/* 删除复制按钮的左边距 */
+.copy-button {
+width: 100%;
+    border-radius: 15px;
+    background-color: hsl(var(--primary));
+    background-image: url(https://imgxz.bizhi3.com/20240309/240309114920879.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    box-shadow: 1px 0px 50px 2px #7c916f;
+}
+
+/* 添加 Toast 样式 */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+/* 添加到文件末尾 */
+.email-link {
+  color: #3b82f6;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.email-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* 添加新的样式 */
+.step-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  min-width: 0; /* 允许容器在必要时缩小 */
+}
+
+.step-circle {
+  width: 4rem;
+  height: 4rem;
+  background-color: #3b82f6;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  flex-shrink: 0;
+}
+
+.step-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+  min-height: 1.5em;
+}
+
+.step-detail {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.4;
+  min-height: 1.4em;
+}
+
+.step-line {
+  flex: 1;
+  position: relative;
+  max-width: 100px;
+}
+
+.step-line::before {
+  content: '';
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #93c5fd;
+}
+
+/* 响应式设计 */
+@media (max-width: 640px) {
+  .step-container {
+    padding: 0 0.5rem;
+  }
+  
+  .step-circle {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .step-title {
+    font-size: 1rem;
+    min-height: 1.2em;
+  }
+  
+  .step-detail {
+    font-size: 0.75rem;
+    min-height: 1.2em;
+  }
+  
+  .step-line {
+    max-width: 40px;
+  }
+}
+
+.group:hover .opacity-0 {
+    opacity: 1;
+}
+
+.group .absolute {
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* 添加删除按钮的悬停效果 */
+.group button:hover {
+    background-color: #ef4444; /* 红色加深 */
+    transform: scale(1.1);
+}
+
+/* 添加以下响应式样式 */
+@media (max-width: 640px) {
+  .brand-name-full {
+    display: none;
+  }
+  
+  .brand-name-short {
+    display: block;
+  }
+  
+  .nav-container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .nav-space {
+    gap: 0.5rem;
+  }
+}
+
+@media (min-width: 641px) {
+  .brand-name-full {
+    display: block;
+  }
+  
+  .brand-name-short {
+    display: none;
+  }
+}
+
+.loader-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loader-text {
+  color: #4a5568;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* 隐藏进度条，使加载提示更轻量 */
+.loader-progress {
+  display: none;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 添加文件名显示区域的样式 */
+.file-status-container {
+  min-height: 1.5rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  color: #4a5568;
+  transition: all 0.2s ease;
+}
+
+/* 优化上传区域的样式 */
+#pasteArea {
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
+  border: 2px dashed #3b82f6;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#pasteArea.drag-over {
+  border-color: #2563eb;
+  background-color: rgba(59, 130, 246, 0.1);
+  transform: scale(1.01);
+}
+
+#pasteArea.drag-over::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+      rgba(59, 130, 246, 0.1) 25%, 
+      rgba(59, 130, 246, 0.2) 25%, 
+      rgba(59, 130, 246, 0.2) 50%, 
+      rgba(59, 130, 246, 0.1) 50%, 
+      rgba(59, 130, 246, 0.1) 75%, 
+      rgba(59, 130, 246, 0.2) 75%);
+  background-size: 20px 20px;
+  animation: moveStripes 1s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes moveStripes {
+  0% { background-position: 0 0; }
+  100% { background-position: 20px 0; }
+}
+
+/* 确保图片预览区域的间距合适 */
+#imagePreviewArea {
+  min-height: 2rem;
+  margin-top: 0.25rem;
+}
+
+/* 优化表单项之间的间距 */
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+/* 预览项样式 */
+.preview-item {
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.preview-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.preview-image {
+    border-radius: 0.375rem;
+    transition: transform 0.3s ease;
+}
+
+.preview-image:hover {
+    transform: scale(1.02);
+}
+
+/* 文件名输入框样式 */
+.preview-item input[type="text"] {
+    transition: border-color 0.3s ease;
+}
+
+.preview-item input[type="text"]:hover {
+    border-color: #93C5FD;
+}
+
+.preview-item input[type="text"]:focus {
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Toast 组件样式 */
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.toast {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  max-width: 300px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.info {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.toast.warning {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.toast.error {
+  background-color: #ef4444;
+  color: white;
+}
+
+/* 输入警告状态 */
+.input-warning {
+  border-color: #f59e0b !important;
+  animation: shake 0.5s ease-in-out;
+}
+
+.warning-text {
+  color: #f59e0b;
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.warning-text.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 上传区域警告状态 */
+.upload-warning {
+  border-color: #f59e0b !important;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+@keyframes pulse {
+  0%, 100% { border-color: #f59e0b; }
+  50% { border-color: transparent; }
+}
+
+/* 内联提示样式 */
+.inline-warning {
+  background-color: #fff7ed;
+  border-left: 4px solid #f59e0b;
+  color: #9a3412;
+  padding: 8px 12px;
+  margin-top: 4px;
+  font-size: 14px;
+  border-radius: 0 4px 4px 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.inline-warning.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 加强 Footer 标题的加粗效果 */
+footer h4 {
+  font-weight: 600 !important; /* 使用 !important 确保样式优先级 */
+}
+
+@media (max-width: 640px) {
+  footer h4 {
+    font-weight: 600 !important;
+  }
+}
+
+/* 优化 Footer 响应式布局 */
+@media (max-width: 640px) {
+  footer .grid {
+    gap: 2rem;
+  }
+  
+  footer h4 {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+/* 标题容器固定样式 */
+.title-container {
+  padding-top: 0.5rem;
+  min-height: 80px; /* 减小最小高度 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .title-container {
+    padding-top: 0.25rem;
+    min-height: 50px; /* 移动端更小的高度 */
+  }
+}
+
+/* 标题响应式显示控制 */
+.pc-title {
+  display: none;
+}
+
+.mobile-title {
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .pc-title {
+      display: block;
+      background: linear-gradient(138deg, #ff3737, #93c5fd, #3b82f6);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      color: #ffffff52;
+      animation: gradientAnimation 4s ease infinite;
+  }
+}
+
+@keyframes gradientAnimation {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+  
+  .mobile-title {
+    display: none;
+  }
+
+.mb-4 {
+  margin-bottom: 1rem;
+  backdrop-filter: blur(15px);
+  border-radius: 45px;
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / 35%);
+}
+
+.zjnahh {
+  text-align: center;
+}
+
+.text-gray-700 {
+  --tw-text-opacity: 1;
+  border-radius: 15px;
+  color: rgba(55, 65, 81, var(--tw-text-opacity));
+  border-color: rgb(1 86 255);
+}
+
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: #ef4444;
+  border-radius: 15px;
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  backdrop-filter: blur(15px);
+  border-radius: 45px;
+  background-color: rgb(255 255 255 / 35%);
+}
+
+
+nav.bg-white {
+  background-image: radial-gradient(#3b82f638 1px, rgb(255 255 255) 1px);
+  background-size: 4px 4px;
+  width: 100%;
+  width: 51.666667%;
+  top: 1rem;
+  left: 24%;
+  border-radius: 25px;
+  right: 0;
+  background-color: #ffffffab;
+  box-shadow: 0 5px 9px 0 #ffdada, 0 -1px 6px 0 #3b82f6;
+}
+
+.bg-whites{
+  --tw-bg-opacity: 1;
+  backdrop-filter: blur(15px);
+  border-radius: 45px;
+  background-color: rgb(255 255 255 / 35%);
+}
+
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+  width: 40%;
+  border-radius: 15px;
+  background-color: hsl(var(--primary));
+  background-image: url(https://imgxz.bizhi3.com/20240309/240309114920879.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  box-shadow: 1px 0px 50px 2px #7c916f;
+}
