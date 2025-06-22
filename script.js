@@ -1052,50 +1052,127 @@ function handleDrop(e) {
 }
 
 
-// 获取主题切换按钮
-const themeToggle = document.getElementById('theme-toggle');
-// 获取当前主题
-let currentTheme = localStorage.getItem('theme') || 'light';
-// 创建一个 link 元素来加载 CSS 文件
-const themeLink = document.createElement('link');
-themeLink.rel = 'stylesheet';
-themeLink.id = 'theme-stylesheet';
-document.head.appendChild(themeLink);
+// // 获取主题切换按钮
+// const themeToggle = document.getElementById('theme-toggle');
+// // 获取当前主题
+// let currentTheme = localStorage.getItem('theme') || 'light';
+// // 创建一个 link 元素来加载 CSS 文件
+// const themeLink = document.createElement('link');
+// themeLink.rel = 'stylesheet';
+// themeLink.id = 'theme-stylesheet';
+// document.head.appendChild(themeLink);
 
-// 加载当前主题的 CSS 文件
-function loadTheme() {
-    if (currentTheme === 'light') {
-        themeLink.href = 'light-theme.css';
-    } else {
-        themeLink.href = 'dark-theme.css';
-    }
-    // 保存当前主题到本地存储
-    localStorage.setItem('theme', currentTheme);
-}
+// // 加载当前主题的 CSS 文件
+// function loadTheme() {
+//     if (currentTheme === 'light') {
+//         themeLink.href = 'light-theme.css';
+//     } else {
+//         themeLink.href = 'dark-theme.css';
+//     }
+//     // 保存当前主题到本地存储
+//     localStorage.setItem('theme', currentTheme);
+// }
 
-// 切换主题函数
-function toggleTheme() {
-    if (currentTheme === 'light') {
-        currentTheme = 'dark';
-    } else {
-        currentTheme = 'light';
-    }
-    loadTheme();
-}
+// // 切换主题函数
+// function toggleTheme() {
+//     if (currentTheme === 'light') {
+//         currentTheme = 'dark';
+//     } else {
+//         currentTheme = 'light';
+//     }
+//     loadTheme();
+// }
 
-// 添加主题加载成功和失败的提示
-themeLink.onload = function() {
-    // 主题加载成功，使用 ToastManager 显示成功提示
-    ToastManager.show(translations[currentLang].themeLoadSuccess || '主题加载成功', 'info', 3000);
-};
+// // 添加主题加载成功和失败的提示
+// themeLink.onload = function() {
+//     // 主题加载成功，使用 ToastManager 显示成功提示
+//     ToastManager.show(translations[currentLang].themeLoadSuccess || '主题加载成功', 'info', 3000);
+// };
 
-themeLink.onerror = function() {
-    // 主题加载失败，使用 ToastManager 显示失败提示
-    ToastManager.show(translations[currentLang].themeLoadError || '主题加载失败，请重试', 'error', 3000);
-};
+// themeLink.onerror = function() {
+//     // 主题加载失败，使用 ToastManager 显示失败提示
+//     ToastManager.show(translations[currentLang].themeLoadError || '主题加载失败，请重试', 'error', 3000);
+// };
 
-// 初始化加载主题
-loadTheme();
+// // 初始化加载主题
+// loadTheme();
+
+// // 获取主题切换按钮和根元素
+// const themeToggle = document.getElementById('theme-toggle');
+// const rootElement = document.documentElement; // 获取<html>元素
+
+// // 从本地存储加载用户偏好的主题，默认为亮色主题
+// let currentTheme = localStorage.getItem('theme') || 'light';
+
+// // 应用当前主题
+// function applyTheme() {
+//     rootElement.setAttribute('data-theme', currentTheme);
+    
+//     // 更新按钮图标/文本
+//     if (themeToggle) {
+//         themeToggle.textContent = currentTheme === 'light' ? '🌙 暗色' : '☀️ 亮色';
+//     }
+    
+//     // 保存主题偏好到本地存储
+//     localStorage.setItem('theme', currentTheme);
+// }
+
+// // 切换主题的函数
+// function toggleTheme() {
+//     currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+//     applyTheme();
+// }
+
+// // 页面加载时应用当前主题
+// document.addEventListener('DOMContentLoaded', () => {
+//     applyTheme();
+    
+//     // 为主题切换按钮添加点击事件监听器
+//     if (themeToggle) {
+//         themeToggle.addEventListener('click', toggleTheme);
+//     }
+// });
 
 // 添加点击事件监听器
-themeToggle.addEventListener('click', toggleTheme);
+// themeToggle.addEventListener('click', toggleTheme);
+
+
+
+// 获取新的主题切换按钮
+const themeToggleInput = document.getElementById('input');
+
+// 应用当前主题
+function applyTheme() {
+    const rootElement = document.documentElement;
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    rootElement.setAttribute('data-theme', currentTheme);
+
+    // 更新按钮状态
+    if (themeToggleInput) {
+        themeToggleInput.checked = currentTheme === 'dark';
+    }
+
+    // 保存主题偏好到本地存储
+    localStorage.setItem('theme', currentTheme);
+
+        // 触发模糊过渡动画
+    const body = document.body;
+    body.classList.add('blur-transition');
+    setTimeout(() => {
+        body.classList.remove('blur-transition');
+    }, 300); // 动画时长与过渡时长一致
+}
+
+// 添加事件监听器
+if (themeToggleInput) {
+    themeToggleInput.addEventListener('change', function() {
+        const rootElement = document.documentElement;
+        const currentTheme = rootElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        rootElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+}
+
+// 页面加载时应用主题
+window.addEventListener('load', applyTheme);
